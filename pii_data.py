@@ -1,3 +1,4 @@
+from operator import truediv
 import re
 
 
@@ -9,10 +10,7 @@ class Pii(str):
     # https://www.w3schools.com/python/python_regex.asp
     def has_us_phone(self):
         # Match a US phone number ddd-ddd-dddd ie 123-456-7890
-        match = re.search(r'\d{3}-\d{3}-\d{4}', self)
-        if match:
-            return True
-        return False
+        return True if re.search(r'(\d{3}(-|.)\d{3}(-|.)\d{4})|\d{10}', self) else None
 
     def has_email(self):
         return None
@@ -30,14 +28,16 @@ class Pii(str):
         return None
 
     def has_credit_card(self):
-        return None
+        return True if re.search(r'\d{4}-\d{4}-\d{4}-\d{4}', self) else None
 
     def has_at_handle(self):
         return None
 
+    def has_ssn(self):
+        return True if re.search(r'\d{3}-\d{2}-\d{4}', self) else None
+
     def has_pii(self):
-        return self.has_us_phone() or self.has_email() or self.has_ipv4() or self.has_ipv6() or self.has_name() or \
-               self.has_street_address() or self.has_credit_card() or self.has_at_handle()
+        return self.has_us_phone() or self.has_email() or self.has_ipv4() or self.has_ipv6() or self.has_name() or self.has_street_address() or self.has_credit_card() or self.has_at_handle() or self.has_ssn()
 
 
 def read_data(filename: str):
