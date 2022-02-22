@@ -21,6 +21,7 @@ class Pii(str):
         return None
 
     def has_ipv6(self):
+        match =
         return None
 
     def has_name(self):
