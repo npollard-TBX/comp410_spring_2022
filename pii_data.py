@@ -24,7 +24,10 @@ class Pii(str):
         return None
 
     def has_name(self):
-        return None
+        match = re.search(r'[A-Z][a-z]{1,}\s[A-Z][a-z]{1,}', self)
+        if match:
+            return True
+        return False
 
     def has_street_address(self):
         return None

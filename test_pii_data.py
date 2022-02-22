@@ -62,8 +62,18 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_ipv6(), None)
 
     def test_has_name(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_name(), None)
+        #Test case for valid name
+        test_data = Pii('Sean Tisdale')
+        self.assertEqual(test_data.has_name(), True)
+
+        #Test case for invalid name with number
+        test_data = Pii('S3an Tisdale')
+        self.assertEqual(test_data.has_name(), False)
+
+         #Test case for invalid first name only
+        test_data = Pii('Sean ')
+        self.assertEqual(test_data.has_name(), False)
+
 
     def test_has_street_address(self):
         test_data = Pii()
