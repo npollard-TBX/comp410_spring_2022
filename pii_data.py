@@ -15,6 +15,9 @@ class Pii(str):
         return False
 
     def has_email(self):
+        em = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self)
+        if em:
+            return True
         return None
 
     def has_ipv4(self):
