@@ -39,15 +39,17 @@ class DataTestCases(unittest.TestCase):
         # Test a valid US phone number
         test_data = Pii('My phone number is 970-555-1212')
         self.assertTrue(test_data.has_us_phone())
+        # Test a valid US phone number
+        test_data = Pii('My phone number is 9705551212')
+        self.assertTrue(test_data.has_us_phone())
 
         # Test a partial US phone number
         test_data = Pii('My number is 555-1212')
         self.assertFalse(test_data.has_us_phone())
 
-        # Test a phone number with incorrect delimiters
-        # TODO discuss changing requirements to support this
+        # Updated to allow for this entry
         test_data = Pii('My phone number is 970.555.1212')
-        self.assertFalse(test_data.has_us_phone())
+        self.assertTrue(test_data.has_us_phone())
 
     def test_has_email(self):
         test_data = Pii()
@@ -70,12 +72,42 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_street_address(), None)
 
     def test_has_credit_card(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_credit_card(), None)
+        test_data = Pii('1929-1228-3455-3454')
+        self.assertTrue(test_data.has_credit_card())
+        test_data = Pii('2345-4567-5678-6789')
+        self.assertTrue(test_data.has_credit_card())
+        test_data = Pii('2345-1324-3456-1234')
+        self.assertTrue(test_data.has_credit_card())
+        test_data = Pii('5678-2349-7654-6435')
+        self.assertTrue(test_data.has_credit_card())
+
+        # bad symbol
+        test_data = Pii('3456=1234=5678=6789')
+        self.assertFalse(test_data.has_credit_card())
+        # missing symbol
+        test_data = Pii('1234764598764567')
+        self.assertFalse(test_data.has_credit_card())
 
     def test_has_at_handle(self):
         test_data = Pii()
         self.assertEqual(test_data.has_at_handle(), None)
+
+    def test_has_ssn(self):
+        test_data = Pii('123-45-5667')
+        self.assertTrue(test_data.has_ssn())
+        test_data = Pii('654-45-3456')
+        self.assertTrue(test_data.has_ssn())
+        test_data = Pii('098-67-9878')
+        self.assertTrue(test_data.has_ssn())
+
+        test_data = Pii('098.67.9878')
+        self.assertFalse(test_data.has_ssn())
+        test_data = Pii('098679878')
+        self.assertFalse(test_data.has_ssn())
+        test_data = Pii('098-6-9878')
+        self.assertFalse(test_data.has_ssn())
+
+        # TODO make bad inputs
 
     def test_has_pii(self):
         test_data = Pii()
