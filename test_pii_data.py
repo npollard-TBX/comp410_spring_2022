@@ -57,13 +57,22 @@ class DataTestCases(unittest.TestCase):
         test_data = Pii('My IP is 99.48.227.227')
         self.assertEqual(test_data.has_ipv4(), True)
 
-        # Test a partial US ipv4
+        test_data = Pii('My IP is 192.168.1.1')
+        self.assertEqual(test_data.has_ipv4(), True)
+
+        # Test a partial ipv4
         test_data = Pii('My IP is 87.43.552')
+        self.assertEqual(test_data.has_ipv4(), False)
+
+        test_data = Pii('My IP is 192.343.2')
         self.assertEqual(test_data.has_ipv4(), False)
 
         # Test an ipv4 with incorrect delimiters
         # TODO discuss changing requirements to support this
         test_data = Pii('My IP is 99-48-227-227')
+        self.assertEqual(test_data.has_ipv4(), False)
+
+        test_data = Pii('My IP is 192-433-1-1')
         self.assertEqual(test_data.has_ipv4(), False)
 
     def test_has_ipv6(self):

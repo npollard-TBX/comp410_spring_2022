@@ -18,7 +18,7 @@ class Pii(str):
         return None
 
     def has_ipv4(self):
-        match = re.search(r'\d{2}\.\d{2}\.\d{3}\.\d{3}', self)
+        match = re.search(r'(\d{2}\.\d{2}\.\d{3}\.\d{3})|(\d{3}\.\d{3}\.\d\.\d)', self) 
         if match:
             return True
         return False
