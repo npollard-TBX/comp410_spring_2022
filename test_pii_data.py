@@ -49,7 +49,19 @@ class DataTestCases(unittest.TestCase):
         self.assertTrue(test_data.has_us_phone())
 
     def test_has_email(self):
-        test_data = Pii()
+        test_data = Pii('My email is kavondean@gmail.com')
+        self.assertEqual(test_data.has_email(), True)
+
+        test_data = Pii('My email is kavon.dean@gmail.com')
+        self.assertEqual(test_data.has_email(), True)
+
+        test_data = Pii('My email is kxdean@aggies.ncat.edu')
+        self.assertEqual(test_data.has_email(), True)
+
+        test_data = Pii('My email is kavondean.com')
+        self.assertEqual(test_data.has_email(), None)
+
+        test_data = Pii('My email is kavondeangmail.com')
         self.assertEqual(test_data.has_email(), None)
 
     def test_has_ipv4(self):
