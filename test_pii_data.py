@@ -45,9 +45,8 @@ class DataTestCases(unittest.TestCase):
         self.assertFalse(test_data.has_us_phone())
 
         # Test a phone number with incorrect delimiters
-        # TODO discuss changing requirements to support this
         test_data = Pii('My phone number is 970.555.1212')
-        self.assertFalse(test_data.has_us_phone())
+        self.assertTrue(test_data.has_us_phone())
 
     def test_has_email(self):
         test_data = Pii()
