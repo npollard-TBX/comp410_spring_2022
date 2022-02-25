@@ -34,7 +34,7 @@ class DataTestCases(unittest.TestCase):
         data = read_data('sample_data.txt')
 
         self.assertEqual(data, expected_data)
-def test_has_email(self):
+    def test_has_email(self):
         test_data = Pii('My email is kaylahen2019@gmail.com')
         self.assertEqual(test_data.has_email(), True)
 
