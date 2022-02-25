@@ -8,17 +8,25 @@ class Pii(str):
     # https://regex101.com
     # https://www.w3schools.com/python/python_regex.asp
     def has_us_phone(self):
-        # Match a US phone number ddd-ddd-dddd ie 123-456-7890
-        match = re.search(r'\d{3}-\d{3}-\d{4}', self)
-        if match:
+        if re.search(r'\d{9}', self):
             return True
-        return False
+        # Match a US phone number ddd-ddd-dddd ie 123-456-7890
+        elif re.search(r'\d{3}[-.]\d{3}[-.]\d{4}', self):
+            return True
+        else:
+            return False
 
     def has_email(self):
+        em = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self)
+        if em:
+            return True
         return None
 
     def has_ipv4(self):
-        return None
+        match = re.search(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})', self) 
+        if match:
+            return True
+        return False
 
     def has_ipv6(self):
         match = re.search(r'(^(\b[0-9a-fA-F]{0,4}\b)?:(\b[0-9a-fA-F]{0,4}\b)?:'
@@ -36,13 +44,19 @@ class Pii(str):
         return None
 
     def has_name(self):
-        return None
+        match = re.search(r'[A-Z][a-z]{1,}\s[A-Z][a-z]{1,}', self)
+        if match:
+            return True
+        return False
 
     def has_street_address(self):
         return None
 
     def has_credit_card(self):
-        return None
+        match = re.search(r'\d{4}-\d{4}-\d{4}-\d{4}', self)
+        if match:
+            return True
+        return False
 
     def has_at_handle(self):
         return None
@@ -67,6 +81,9 @@ if __name__ == '__main__':
     print('---')
 
     pii_data = Pii('My phone number is 123-123-1234')
+    print(pii_data)
+    
+    pii_data = Pii('My IPv4 is 99.48.227.227')
     print(pii_data)
 
     if pii_data.has_pii():
