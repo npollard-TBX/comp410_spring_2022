@@ -109,8 +109,11 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_street_address(), None)
 
     def test_has_credit_card(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_credit_card(), None)
+        test_data = Pii('My card is 1234-1234-1234-1234')
+        self.assertTrue(test_data.has_credit_card())
+        # invalid card
+        test_data = Pii('My card is 123456-123456-1234-1234')
+        self.assertFalse(test_data.has_credit_card())
 
     def test_has_at_handle(self):
         test_data = Pii()
