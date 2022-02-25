@@ -1,5 +1,8 @@
 import re
 
+def has_email(self):
+    return True if re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self) else None
+
 
 def read_data(filename: str):
     data = []
@@ -13,3 +16,11 @@ def read_data(filename: str):
 if __name__ == '__main__':
     data = read_data('sample_data.txt')
     print(data)
+    prinnt('---')
+
+    pii_data =Pii('My email address is aggiesrule@gmail.com')
+    print(pii_data)
+    if pii_data.has_pii():
+        print('There is PII data preset')
+    else:
+        print('No PII data detected')

@@ -18,7 +18,21 @@ class DataTestCases(unittest.TestCase):
         data = read_data('sample_data.txt')
 
         self.assertEqual(data, expected_data)
+def test_has_email(self):
+    test_data = Pii('My email is kaylahen2019@gmail.com')
+        self.assertEqual(test_data.has_email(), True)
 
+        test_data = Pii('My email is martin.complex@gmail.com')
+        self.assertEqual(test_data.has_email(), True)
+
+        test_data = Pii('My email is classof2023@aggies.ncat.edu')
+        self.assertEqual(test_data.has_email(), True)
+
+        test_data = Pii('My email is computerscience.com')
+        self.assertEqual(test_data.has_email(), None)
+
+        test_data = Pii('My email is engineering1gmail.com')
+        self.assertEqual(test_data.has_email(), None)
 
 if __name__ == '__main__':
     unittest.main()
