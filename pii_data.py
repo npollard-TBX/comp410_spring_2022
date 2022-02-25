@@ -1,5 +1,8 @@
 import re
 
+def has_email(self):
+    return True if re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self) else None
+
 
 # PII = Personally Identifiable Information
 # Create a new Pii class based on str
