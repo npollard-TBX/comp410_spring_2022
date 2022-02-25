@@ -21,7 +21,18 @@ class Pii(str):
         return None
 
     def has_ipv6(self):
-        match =
+        match = re.search(r'(^(\b[0-9a-fA-F]{0,4}\b)?:(\b[0-9a-fA-F]{0,4}\b)?:'
+                           r'(\b[0-9a-fA-F]{0,4}\b)?:(\b[0-9a-fA-F]{0,4}\b)?:'
+                           r'(\b[0-9a-fA-F]{0,4}\b)?:(\b[0-9a-fA-F]{0,4}\b)?:'
+                           r'(\b[0-9a-fA-F]{0,4}\b)?:(\b[0-9a-fA-F]{0,4}\b)?$)', self)
+
+        # match = re.search(r'\b^[0-9a-fA-F]{0,4}\b:\b[0-9a-fA-F]{0,4}\b:'
+        #                   r'\b[0-9a-fA-F]{0,4}\b:\b[0-9a-fA-F]{0,4}\b:'
+        #                   r'\b[0-9a-fA-F]{0,4}\b:\b[0-9a-fA-F]{0,4}\b:'
+        #                   r'\b[0-9a-fA-F]{0,4}\b:\b[0-9a-fA-F]{0,4}\b', self)
+        if match:
+            return True
+        return False
         return None
 
     def has_name(self):
