@@ -54,12 +54,14 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_email(), None)
 
     def test_has_ipv4(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_ipv4(), None)
+        # Test a valid IPv4 address
+        test_data = Pii('176.96.81.20')
+        self.assertTrue(test_data.has_ipv4())
 
     def test_has_ipv6(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_ipv6(), None)
+        # Test a valid IPv6 address
+        test_data = Pii('2001:0db8:85a3:0000:0000:8a2e:0370:7334')
+        self.assertTrue(test_data.has_ipv6())
 
     def test_has_name(self):
         test_data = Pii()
