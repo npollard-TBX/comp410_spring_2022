@@ -87,8 +87,19 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_ipv4(), False)
 
     def test_has_ipv6(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_ipv6(), None)
+        # https: // www.ibm.com / docs / en / ts3500 - tape - library?topic = functionality - ipv4 - ipv6 - address - formats
+        # valid address
+        test_data = Pii('2001:0db8:85a3:0000:0000:8a2e:0370:7334')
+        self.assertTrue(test_data.has_ipv6())
+        # invalid - not enough segments
+        test_data = Pii('2001:0db8:0001:0000:0000:0ab9:C0A8')
+        self.assertFalse(test_data.has_ipv6())
+        # invalid - too many colons
+        test_data = Pii('2001:0db8:0001:0000:0000:0ab9:C0A8:0102:')
+        self.assertFalse(test_data.has_ipv6())
+        # invalid - seperated by commas not colons
+        test_data = Pii('2001,0db8,0001,0000,0000,0ab9,C0A8,0102')
+        self.assertFalse(test_data.has_ipv6())
 
     def test_has_name(self):
         #Test case for valid name
