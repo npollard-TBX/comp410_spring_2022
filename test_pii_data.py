@@ -50,8 +50,8 @@ class DataTestCases(unittest.TestCase):
         self.assertFalse(test_data.has_us_phone())
 
     def test_has_email(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_email(), None)
+        test_data = Pii('My email is user@doamin.com')
+        self.assertTrue(test_data.has_email())
 
     def test_has_ipv4(self):
         # Test a valid IPv4 address
@@ -78,6 +78,10 @@ class DataTestCases(unittest.TestCase):
     def test_has_at_handle(self):
         test_data = Pii()
         self.assertEqual(test_data.has_at_handle(), None)
+        
+    def test_has_ssn(self):
+        test_data = Pii('123-45-6789')
+        self.assertTrue(test_data.has_ssn())
 
     def test_has_pii(self):
         test_data = Pii()
