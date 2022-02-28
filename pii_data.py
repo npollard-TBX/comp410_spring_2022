@@ -1,6 +1,7 @@
 import re
 
 
+
 # PII = Personally Identifiable Information
 # Create a new Pii class based on str
 class Pii(str):
@@ -11,8 +12,9 @@ class Pii(str):
         # Match a US phone number ddd-ddd-dddd ie 123-456-7890
         return True if re.search(r'(\d{3}(-|.)\d{3}(-|.)\d{4})|\d{10}', self) else None
 
+    
     def has_email(self):
-        return None
+        return True if re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self) else None
 
     def has_ipv4(self):
         return None
