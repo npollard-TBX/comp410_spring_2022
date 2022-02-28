@@ -17,7 +17,7 @@ class Pii(str):
     #Implemented by Caleb Williams
     def has_email(self):
         #Match a typical email string@string.string
-        match = re.search(r'[a-z0-9]+@[a-z]+\.[a-z]{2,3}',self)
+        match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self)
         if match:
             return True
         return False
