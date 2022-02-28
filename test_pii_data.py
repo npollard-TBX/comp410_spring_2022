@@ -96,6 +96,10 @@ class DataTestCases(unittest.TestCase):
         test_data = Pii('5678-2349-7654-6435')
         self.assertTrue(test_data.has_credit_card())
 
+        # Amex card case
+        test_data = Pii('1234-123456-12345')
+        self.assertTrue(test_data.has_credit_card())
+
         # bad symbol
         test_data = Pii('3456=1234=5678=6789')
         self.assertFalse(test_data.has_credit_card())
