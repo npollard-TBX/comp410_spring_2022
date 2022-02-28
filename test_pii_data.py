@@ -63,7 +63,7 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_email(), True)
 
         test_data = Pii('My email is userdomain.com')
-        self.assertEqual(test_data.has_email(), None)
+        self.assertEqual(test_data.has_email(), False)
 
     def test_has_ipv4(self):
         test_data = Pii()
