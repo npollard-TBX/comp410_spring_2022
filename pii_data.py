@@ -25,7 +25,7 @@ class Pii(str):
         return True if re.search(r'^[A-Z][a-z]+\s[A-Z][a-z]+$', self) else None
 
     def has_street_address(self):
-        return True if re.search(r'^[0-9]+\s[A-Z][a-z]+\s[A-Z][a-z]+$', self) else None
+        return True if re.search(r'[0-9]+\s[A-Z][a-z]+\s[A-Z][a-z]+', self) else None
 
     def has_credit_card(self):
         return True if re.search(r'(\d{4}-\d{4}-\d{4}-\d{4})|(\d{4}-\d{6}-\d{5})', self) else None
