@@ -6,7 +6,7 @@ from pii_data import Pii
 class DataTestCases(unittest.TestCase):
     def test_read_data(self):
         expected_data = ['Aggie Pride Worldwide',
-                         'Aggies Do',
+                         'Aggies Do', 
                          'Go Aggies',
                          'Aggie Strong!',
                          'Go Aggies',
@@ -29,7 +29,10 @@ class DataTestCases(unittest.TestCase):
                          'Aggie Pride',
                          'Aggies are always number 1!',
                          'Because thats what Aggies do',
-                         'Aggie Bred']
+                         'Aggie Bred',
+                         'Move forward with purpose',
+                         'GO Aggie!',
+                         'Aggie Pride']
 
         data = read_data('sample_data.txt')
 
@@ -50,8 +53,17 @@ class DataTestCases(unittest.TestCase):
         self.assertFalse(test_data.has_us_phone())
 
     def test_has_email(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_email(), None)
+        test_data = Pii('My email is user@domain.com')
+        self.assertEqual(test_data.has_email(), True)
+
+        test_data = Pii('My email is user.name@domain.com')
+        self.assertEqual(test_data.has_email(), True)
+
+        test_data = Pii('My email is user@domain.site.com')
+        self.assertEqual(test_data.has_email(), True)
+
+        test_data = Pii('My email is userdomain.com')
+        self.assertEqual(test_data.has_email(), False)
 
     def test_has_ipv4(self):
         test_data = Pii()

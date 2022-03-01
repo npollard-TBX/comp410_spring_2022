@@ -14,8 +14,13 @@ class Pii(str):
             return True
         return False
 
+    #Implemented by Caleb Williams
     def has_email(self):
-        return None
+        #Match a typical email string@string.string
+        match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self)
+        if match:
+            return True
+        return False
 
     def has_ipv4(self):
         return None
@@ -61,3 +66,4 @@ if __name__ == '__main__':
         print('There is PII data preset')
     else:
         print('No PII data detected')
+
