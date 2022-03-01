@@ -22,7 +22,7 @@ class Pii(str):
         return None
 
     def has_name(self):
-        return True if re.search(r'^[A-Z][a-z]+\s[A-Z][a-z]+$', self) else None
+        return True if re.search(r'[A-Z][a-z]+\s[A-Z][a-z]+', self) else None
 
     def has_street_address(self):
         return None
