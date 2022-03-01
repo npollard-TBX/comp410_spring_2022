@@ -12,7 +12,6 @@ class Pii(str):
         # Match a US phone number ddd-ddd-dddd ie 123-456-7890
         return True if re.search(r'(\d{3}(-|.)\d{3}(-|.)\d{4})|\d{10}', self) else None
 
-    
     def has_email(self):
         return True if re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self) else None
 
@@ -23,7 +22,7 @@ class Pii(str):
         return None
 
     def has_name(self):
-        return None
+        return True if re.search(r'^[A-Z][a-z]+\s[A-Z][a-z]+$', self) else None
 
     def has_street_address(self):
         return None

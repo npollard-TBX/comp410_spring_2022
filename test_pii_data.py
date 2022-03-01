@@ -79,7 +79,13 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_ipv6(), None)
 
     def test_has_name(self):
-        test_data = Pii()
+        test_data = Pii('Alex Red')
+        self.assertEqual(test_data.has_name(), True)
+        test_data = Pii('William Dane')
+        self.assertEqual(test_data.has_name(), True)
+        test_data = Pii('kate')
+        self.assertEqual(test_data.has_name(), None)
+        test_data = Pii('rodger samson')
         self.assertEqual(test_data.has_name(), None)
 
     def test_has_street_address(self):
