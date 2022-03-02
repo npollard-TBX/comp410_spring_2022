@@ -50,10 +50,19 @@ class Pii(str):
         return False
 
     def has_credit_card(self):
-        return None
+        match = re.search(r'\d{4}-\d{4}-\d{4}-\d{4}', self)
+        if match:
+            return True
+        return False
 
     def has_at_handle(self):
-        return None
+        
+        #Match @ handles for twitter
+        match = re.search(r'[w\@][A-z0-9]{0,15}$', self)
+        if match:
+            return True
+        return False
+
     
     def has_ssn(self):
         match = re.search(r'\d{3}-\d{2}-\d{4}', self)
@@ -61,6 +70,7 @@ class Pii(str):
         if match:
             return True
         return None
+
 
     def has_pii(self):
         return self.has_us_phone() or self.has_email() or self.has_ipv4() or self.has_ipv6() or self.has_name() or self.has_street_address() or self.has_credit_card() or self.has_at_handle() or self.has_ssn()
