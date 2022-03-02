@@ -49,22 +49,8 @@ class Pii(str):
         
         #Match @ handles for twitter
         match = re.search(r'[w\@][A-z0-9]{0,15}$', self)
-        print(match)
-        print(self)
-        #Match @ handles for instagram
-        #match3 = re.search(r'^(?!.*\.\.|.*\.$)[A-z0-9][\w.]+[A-z0-9]{0,30}$', self)
-        #Match @ handles for snapchat
-        #match4 = re.search(r'^(?!.*\.\.|.*\_\_|.*\-\-)(?!.*\.$|.*\_$|.*\-$)(?!.*\.\-|.*\-\.|.*\-\_|.*\_\-|.*\.\_|.*\_\.)[a-zA-Z]+[\w.-][0-9A-z]{0,15}$',self)
         if match:
-            
             return True
-        #if match2:
-              #return True
-       # if match3:
-           # return True
-        #if match4:
-           # return True
-
         return False
 
 

@@ -85,11 +85,17 @@ class DataTestCases(unittest.TestCase):
         #Test case for valid @ handle
         test_data = Pii('My social media handle is @sushi_fein')
         self.assertTrue(test_data.has_at_handle())
+        test_data = Pii('My social media handle is @sushifein123')
+        self.assertTrue(test_data.has_at_handle())
+
         
 
         #Test case for invalid  @ handle
         test_data = Pii('My social media handle is @.sushifein')
         self.assertFalse(test_data.has_at_handle())
+        test_data = Pii('My social media handle is @sushi fein')
+        self.assertFalse(test_data.has_at_handle())
+
         
 
 
