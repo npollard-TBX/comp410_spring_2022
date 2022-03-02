@@ -86,9 +86,10 @@ def read_data(filename: str):
 
 
 if __name__ == '__main__':
-    data = read_data('C:\Users\taido\comp4100\comp410_spring_2022\sample_data.txt')
-    print(data)
-    print('---')
+    # Removed hard coded windows path.  We'll discuss this in sprint3
+    # data = read_data('C:\Users\taido\comp4100\comp410_spring_2022\sample_data.txt')
+    # print(data)
+    # print('---')
 
     pii_data = Pii('My phone number is 123-123-1234')
     print(pii_data)
