@@ -10,9 +10,13 @@ class Pii(str):
     def has_us_phone(self):
         # Match a US phone number ddd-ddd-dddd ie 123-456-7890
         match = re.search(r'\d{3}-\d{3}-\d{4}', self)
+
         if match:
             return True
-        return False
+        elif re.search(r'\d{10}', self):
+            return True
+        else:
+            return False
 
     def has_email(self):
         match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self)
