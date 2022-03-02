@@ -72,20 +72,40 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_street_address(), None)
 
     def test_has_credit_card(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_credit_card(), None)
+        #Test case for valid credit card
+        test_data = Pii('My card is 1234-1234-1234-1234')
+        self.assertTrue(test_data.has_credit_card())
+        # Test case for an invalid card
+        test_data = Pii('My card is 123456-123456-1234-1234')
+        self.assertFalse(test_data.has_credit_card())
+        test_data = Pii('My card is 123a-1256-14-124')
+        self.assertFalse(test_data.has_credit_card())
 
     def test_has_at_handle(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_at_handle(), None)
+
+       #Test case for valid @ handle
+        test_data = Pii('My social media handle is @sushi_fein')
+        self.assertTrue(test_data.has_at_handle())
+
+
+        #Test case for invalid  @ handle
+        test_data = Pii('My social media handle is @.sushifein')
+        self.assertFalse(test_data.has_at_handle())
+      
+
+        
+
+
+     
         
     def test_has_ssn(self):
         test_data = Pii('123-45-6789')
         self.assertTrue(test_data.has_ssn())
 
+
     def test_has_pii(self):
         test_data = Pii()
-        self.assertEqual(test_data.has_pii(), None)
+        self.assertEqual(test_data.has_pii(),None)
 
 
 if __name__ == '__main__':
