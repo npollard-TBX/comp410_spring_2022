@@ -64,12 +64,18 @@ class DataTestCases(unittest.TestCase):
         self.assertTrue(test_data.has_ipv6())
 
     def test_has_name(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_name(), None)
+        test_data = Pii('My name is John Smith')
+        self.assertTrue(test_data.has_name())
+
+        test_data = Pii('My name is john smith')
+        self.assertFalse(test_data.has_name())
 
     def test_has_street_address(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_street_address(), None)
+        test_data = Pii('My address is 123 Chestnut Lane')
+        self.assertTrue(test_data.has_street_address())
+
+        test_data = Pii('My address is 123 chestnut lane')
+        self.assertFalse(test_data.has_name())
 
     def test_has_credit_card(self):
         test_data = Pii()

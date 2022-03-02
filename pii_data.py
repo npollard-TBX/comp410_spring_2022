@@ -38,10 +38,16 @@ class Pii(str):
         return False
 
     def has_name(self):
-        return None
+        match = re.search(r'\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b', self)
+        if match:
+            return True
+        return False
 
     def has_street_address(self):
-        return None
+        match = re.search(r'\d{0,9}\s{1}\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b', self)
+        if match:
+            return True
+        return False
 
     def has_credit_card(self):
         return None
@@ -70,7 +76,7 @@ def read_data(filename: str):
 
 
 if __name__ == '__main__':
-    data = read_data('sample_data.txt')
+    data = read_data('C:\Users\taido\comp4100\comp410_spring_2022\sample_data.txt')
     print(data)
     print('---')
 
