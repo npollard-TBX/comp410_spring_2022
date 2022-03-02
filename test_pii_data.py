@@ -96,8 +96,8 @@ class DataTestCases(unittest.TestCase):
         self.assertTrue(test_data.has_ipv6())  
 
         # test an invalid address with to many digits in segment
-        self.assertFalse(test_data.has_ipv6())  
         test_data = Pii('00000:::::')
+        self.assertFalse(test_data.has_ipv6())        
         
         # test an invalid address w letter outside of bounds
         self.assertFalse(test_data.has_ipv6())  
