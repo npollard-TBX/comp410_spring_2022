@@ -37,16 +37,16 @@ class DataTestCases(unittest.TestCase):
 
     def test_has_us_phone(self):
         # Test a valid US phone number
-        test_data = Pii('My phone number is 970-555-1212')
+        test_data = Pii(804-888-8888)
         self.assertTrue(test_data.has_us_phone())
 
         # Test a partial US phone number
-        test_data = Pii('My number is 555-1212')
-        self.assertFalse(test_data.has_us_phone())
+        test_data = Pii(3524567948)
+        self.assertTrue(test_data.has_us_phone())
 
         # Test a phone number with incorrect delimiters
         # TODO discuss changing requirements to support this
-        test_data = Pii('My phone number is 970.555.1212')
+        test_data = Pii(435-6445)
         self.assertFalse(test_data.has_us_phone())
 
     def test_has_email(self):
