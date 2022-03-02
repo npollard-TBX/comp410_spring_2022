@@ -50,7 +50,10 @@ class Pii(str):
         return False
 
     def has_street_address(self):
-        return None
+        match = re.search(r'^\d{0,4}\s[A-Z][a-zA-Z]{2,30}\s\b(Ave|St|Blvd|Rd)\b', self)
+        if match:
+            return True
+        return False
 
     def has_credit_card(self):
         match = re.search(r'\d{4}-\d{4}-\d{4}-\d{4}', self)
