@@ -40,8 +40,11 @@ class DataTestCases(unittest.TestCase):
         test_data = Pii('My phone number is 970-555-1212')
         self.assertTrue(test_data.has_us_phone())
 
+        test_data = Pii('My phone number is 8048226077')
+        self.assertTrue(test_data.has_us_phone())
+
         # Test a partial US phone number
-        test_data = Pii('My number is 555-1212')
+        test_data = Pii('My phone number is 555-1212')
         self.assertFalse(test_data.has_us_phone())
 
         # Test a phone number with incorrect delimiters
