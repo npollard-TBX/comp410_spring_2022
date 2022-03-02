@@ -23,13 +23,21 @@ class Pii(str):
         return False
 
     def has_ipv4(self):
-        return None
+        # Match a typical ipv4 address
+        match = re.search(r'(?:[0-9]{1,3}\.){3}[0-9]{1,3}', self)
+        if match:
+            return True
+        return False
 
     def has_ipv6(self):
         return None
 
     def has_name(self):
-        return None
+        # Match a name that is capitalized
+        match = re.search(r'[A-Z][a-z\-\']+\s[A-Z][a-z\-\']+', self)
+        if match:
+            return True
+        return False
 
     def has_street_address(self):
         return None
@@ -66,4 +74,3 @@ if __name__ == '__main__':
         print('There is PII data preset')
     else:
         print('No PII data detected')
-

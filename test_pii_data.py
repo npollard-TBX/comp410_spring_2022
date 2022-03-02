@@ -66,17 +66,40 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_email(), False)
 
     def test_has_ipv4(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_ipv4(), None)
+
+        #Valid ip address
+        test_data = Pii('This is an IP address: 192.142.42.32')
+        self.assertTrue(test_data.has_ipv4())
+
+        # Valid ip Address
+        test_data = Pii('This is an IP address: 1.1.1.1')
+        self.assertTrue(test_data.has_ipv4())
+
+        # Incomplete address
+        test_data = Pii('This is an IP address: 142.42.32')
+        self.assertFalse(test_data.has_ipv4())
+
+        # Non numbers in ip address
+        test_data = Pii('This is an IP address: 1.X.X.1')
+        self.assertFalse(test_data.has_ipv4())
 
     def test_has_ipv6(self):
         test_data = Pii()
         self.assertEqual(test_data.has_ipv6(), None)
 
     def test_has_name(self):
-        test_data = Pii()
-        self.assertEqual(test_data.has_name(), None)
+        test_data = Pii('My name is Alexander Hamilton.')
+        self.assertTrue(test_data.has_name())
 
+        test_data = Pii("His name is Marc'o O'Reilly-Villa.")
+        self.assertTrue(test_data.has_name())
+
+        test_data = Pii('Her name is Janet jackson.')
+        self.assertFalse(test_data.has_name())
+
+        test_data = Pii("Their name is not in this test.")
+        self.assertFalse(test_data.has_name())
+        
     def test_has_street_address(self):
         test_data = Pii()
         self.assertEqual(test_data.has_street_address(), None)
