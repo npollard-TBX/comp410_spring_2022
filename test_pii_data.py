@@ -55,6 +55,7 @@ class DataTestCases(unittest.TestCase):
         test_data = Pii('My phone number is 970.555.1212')
         self.assertFalse(test_data.has_us_phone())
 
+
     def test_has_email(self):
         test_data = Pii('My email is user@doamin.com')
         self.assertTrue(test_data.has_email())
@@ -93,6 +94,11 @@ class DataTestCases(unittest.TestCase):
         test_data = Pii('My card is 123a-1256-14-124')
         self.assertFalse(test_data.has_credit_card())
 
+    def test_has_credit_card_anonymize(self):
+        test_data = Pii('My card is 1234-1234-1234-1234')
+        self.assertEqual(test_data.has_credit_card(anonymize=True),'My card is [credit card]')
+
+
     def test_has_at_handle(self):
 
        #Test case for valid @ handle
@@ -103,6 +109,18 @@ class DataTestCases(unittest.TestCase):
         #Test case for invalid  @ handle
         test_data = Pii('My social media handle is @.sushifein')
         self.assertFalse(test_data.has_at_handle())
+
+
+    def test_has_at_handle_anonymize(self):
+
+       #Test case for anonymizing @ handle
+        test_data = Pii('My social media handle is @sushi_fein')
+        self.assertEqual(test_data.has_at_handle(anonymize=True),'My social media handle is [at handle]')
+
+
+        #Test case for anonymizing invalid @ handle
+        test_data = Pii('My social media handle is @sushi_fein on twitter but on snapchat it is @sushi.fein')
+        self.assertEqual(test_data.has_at_handle(anonymize=True),'My social media handle is [at handle] on twitter but on snapchat it is [at handle]')
       
 
         
