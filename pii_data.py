@@ -10,12 +10,20 @@ class Pii(str):
     def has_us_phone(self):
         # Match a US phone number ddd-ddd-dddd ie 123-456-7890
         match = re.search(r'\d{3}-\d{3}-\d{4}', self)
+
+        if match:
+            return True
+        elif re.search(r'\d{10}', self):
+            return True
+        else:
+            return False
+
+    def has_email(self):
+        match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self)
+        
         if match:
             return True
         return False
-
-    def has_email(self):
-        return None
 
     def has_ipv4(self, anoymize= False):
         # Match all forms of IPv4
@@ -36,20 +44,46 @@ class Pii(str):
             return True if match != self else None
 
     def has_name(self):
-        return None
+        match = re.search(r'\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b', self)
+        if match:
+            return True
+        return False
 
     def has_street_address(self):
+        match = re.search(r'\d{0,9}\s{1}\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b', self)
+        if match:
+            return True
+        return False
+
+    def has_credit_card(self,anonymize=False):
+        match = re.sub(r'\d{4}-\d{4}-\d{4}-\d{4}','[credit card]', self)
+        if anonymize:
+            return match
+        else:
+            return True if match!= self else None
+
+    def has_at_handle(self,anonymize=False):
+        
+        #Match @ handles for twitter
+        match = re.sub(r'[\@][A-z0-9][A-z0-9.]{0,15}','[at handle]', self)
+        if anonymize:
+            return match
+        else:
+            print (match)
+            return True if match!= self else None
+            
+
+    
+    def has_ssn(self):
+        match = re.search(r'\d{3}-\d{2}-\d{4}', self)
+        
+        if match:
+            return True
         return None
 
-    def has_credit_card(self):
-        return None
-
-    def has_at_handle(self):
-        return None
 
     def has_pii(self):
-        return self.has_us_phone() or self.has_email() or self.has_ipv4() or self.has_ipv6() or self.has_name() or \
-            self.has_street_address() or self.has_credit_card() or self.has_at_handle()
+        return self.has_us_phone() or self.has_email() or self.has_ipv4() or self.has_ipv6() or self.has_name() or self.has_street_address() or self.has_credit_card() or self.has_at_handle() or self.has_ssn()
 
 
 def read_data(filename: str):
@@ -62,9 +96,10 @@ def read_data(filename: str):
 
 
 if __name__ == '__main__':
-    data = read_data('sample_data.txt')
-    print(data)
-    print('---')
+    # Removed hard coded windows path.  We'll discuss this in sprint3
+    # data = read_data('C:\Users\taido\comp4100\comp410_spring_2022\sample_data.txt')
+    # print(data)
+    # print('---')
 
     pii_data = Pii('My phone number is 123-123-1234')
     print(pii_data)
