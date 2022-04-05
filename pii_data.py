@@ -53,19 +53,23 @@ class Pii(str):
             return True
         return False
 
-    def has_credit_card(self):
-        match = re.search(r'\d{4}-\d{4}-\d{4}-\d{4}', self)
-        if match:
-            return True
-        return False
+    def has_credit_card(self,anonymize=False):
+        match = re.sub(r'\d{4}-\d{4}-\d{4}-\d{4}','[credit card]', self)
+        if anonymize:
+            return match
+        else:
+            return True if match!= self else None
 
-    def has_at_handle(self):
+    def has_at_handle(self,anonymize=False):
         
         #Match @ handles for twitter
-        match = re.search(r'[w\@][A-z0-9]{0,15}$', self)
-        if match:
-            return True
-        return False
+        match = re.sub(r'[\@][A-z0-9][A-z0-9.]{0,15}','[at handle]', self)
+        if anonymize:
+            return match
+        else:
+            print (match)
+            return True if match!= self else None
+            
 
     
     def has_ssn(self):
