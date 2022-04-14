@@ -59,6 +59,10 @@ class DataTestCases(unittest.TestCase):
     def test_has_email(self):
         test_data = Pii('My email is user@doamin.com')
         self.assertTrue(test_data.has_email())
+        
+    def test_has_email_anonymize(self):
+        test_data = Pii('My email is johndoe@domain.com')
+        self.assertEqual(test_data.has_email(anonymize=True), 'My email is [email address]')
 
     def test_has_ipv4(self):
         test_data = Pii('176.96.81.20')
@@ -138,19 +142,19 @@ class DataTestCases(unittest.TestCase):
         self.assertEqual(test_data.has_at_handle(anonymize=True),'My social media handle is [at handle]')
 
 
-        #Test case for anonymizing invalid @ handle
+        #Test case for anonymize invalid @ handle
         test_data = Pii('My social media handle is @sushi_fein on twitter but on snapchat it is @sushi.fein')
         self.assertEqual(test_data.has_at_handle(anonymize=True),'My social media handle is [at handle] on twitter but on snapchat it is [at handle]')
-      
-
-        
 
 
-     
-        
+            
     def test_has_ssn(self):
         test_data = Pii('123-45-6789')
         self.assertTrue(test_data.has_ssn())
+        
+    def test_has_ssn_anonymize(self):
+        test_data = Pii('My ssn is 123-45-6789')
+        self.assertEqual(test_data.has_ssn(anonymize=True), 'My ssn is [ssn number]')
 
 
     def test_has_pii(self):
