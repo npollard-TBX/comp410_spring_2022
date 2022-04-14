@@ -6,7 +6,7 @@ from pii_data import Pii
 class DataTestCases(unittest.TestCase):
     def test_read_data(self):
         expected_data = ['Aggie Pride Worldwide',
-                         'Aggies Do',
+                         'Aggies Do', 
                          'Go Aggies',
                          'Aggie Strong!',
                          'Go Aggies',
@@ -29,7 +29,10 @@ class DataTestCases(unittest.TestCase):
                          'Aggie Pride',
                          'Aggies are always number 1!',
                          'Because thats what Aggies do',
-                         'Aggie Bred']
+                         'Aggie Bred',
+                         'Move forward with purpose',
+                         'GO Aggie!',
+                         'Aggie Pride']
 
         data = read_data('sample_data.txt')
 
@@ -40,8 +43,11 @@ class DataTestCases(unittest.TestCase):
         test_data = Pii('My phone number is 970-555-1212')
         self.assertTrue(test_data.has_us_phone())
 
+        test_data = Pii('My phone number is 8048226077')
+        self.assertTrue(test_data.has_us_phone())
+
         # Test a partial US phone number
-        test_data = Pii('My number is 555-1212')
+        test_data = Pii('My phone number is 555-1212')
         self.assertFalse(test_data.has_us_phone())
 
         # Test a phone number with incorrect delimiters
@@ -49,19 +55,26 @@ class DataTestCases(unittest.TestCase):
         test_data = Pii('My phone number is 970.555.1212')
         self.assertFalse(test_data.has_us_phone())
 
+
     def test_has_email(self):
         test_data = Pii('My email is user@doamin.com')
         self.assertTrue(test_data.has_email())
 
     def test_has_ipv4(self):
-        # Test a valid IPv4 address
         test_data = Pii('176.96.81.20')
         self.assertTrue(test_data.has_ipv4())
 
+    def test_has_ipv4_anonymize(self):
+        test_data = Pii('This... 176.96.81.20 is my IP')
+        self.assertEqual(test_data.has_ipv4(anoymize=True), 'This... [IPv4 address] is my IP')
+
     def test_has_ipv6(self):
-        # Test a valid IPv6 address
         test_data = Pii('2001:0db8:85a3:0000:0000:8a2e:0370:7334')
         self.assertTrue(test_data.has_ipv6())
+
+    def test_has_ipv6_anonymize(self):
+        test_data = Pii('My IP address is 2001:0db8:85a3:0000:0000:8a2e:0370:7334')
+        self.assertEqual(test_data.has_ipv6(anonymize=True),"My IP address is [IPv6 address]")
 
     def test_has_name(self):
         test_data = Pii('My name is John Smith')
@@ -87,6 +100,11 @@ class DataTestCases(unittest.TestCase):
         test_data = Pii('My card is 123a-1256-14-124')
         self.assertFalse(test_data.has_credit_card())
 
+    def test_has_credit_card_anonymize(self):
+        test_data = Pii('My card is 1234-1234-1234-1234')
+        self.assertEqual(test_data.has_credit_card(anonymize=True),'My card is [credit card]')
+
+
     def test_has_at_handle(self):
 
        #Test case for valid @ handle
@@ -97,6 +115,18 @@ class DataTestCases(unittest.TestCase):
         #Test case for invalid  @ handle
         test_data = Pii('My social media handle is @.sushifein')
         self.assertFalse(test_data.has_at_handle())
+
+
+    def test_has_at_handle_anonymize(self):
+
+       #Test case for anonymizing @ handle
+        test_data = Pii('My social media handle is @sushi_fein')
+        self.assertEqual(test_data.has_at_handle(anonymize=True),'My social media handle is [at handle]')
+
+
+        #Test case for anonymizing invalid @ handle
+        test_data = Pii('My social media handle is @sushi_fein on twitter but on snapchat it is @sushi.fein')
+        self.assertEqual(test_data.has_at_handle(anonymize=True),'My social media handle is [at handle] on twitter but on snapchat it is [at handle]')
       
 
         

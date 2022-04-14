@@ -10,9 +10,13 @@ class Pii(str):
     def has_us_phone(self):
         # Match a US phone number ddd-ddd-dddd ie 123-456-7890
         match = re.search(r'\d{3}-\d{3}-\d{4}', self)
+
         if match:
             return True
-        return False
+        elif re.search(r'\d{10}', self):
+            return True
+        else:
+            return False
 
     def has_email(self):
         match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self)
@@ -21,18 +25,26 @@ class Pii(str):
             return True
         return False
 
-    def has_ipv4(self):
+    def has_ipv4(self, anoymize= False):
         # Match all forms of IPv4
-        match = re.search("(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])", self)
+        match = re.sub("(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[1-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\.(25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])","[IPv4 address]", self)
 
-        if match:
-            return True
-        return False
+        if anoymize:
+            return match
+        else:
+            return True if match != self else None
 
-    def has_ipv6(self):
+    def has_ipv6(self, anonymize=False):
         # Match all forms of IPv6
-        match = re.search("(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))", self)
+        match = re.sub("(([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)|fe80:(:[0-9a-fA-F]{0,4}){0,4}%[0-9a-zA-Z]{1,}|::(ffff(:0{1,4}){0,1}:){0,1}((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])|([0-9a-fA-F]{1,4}:){1,4}:((25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9])\.){3,3}(25[0-5]|(2[0-4]|1{0,1}[0-9]){0,1}[0-9]))", "[IPv6 address]",self)
 
+        if anonymize:
+            return match
+        else:
+            return True if match != self else None
+
+    def has_name(self):
+        match = re.search(r'\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b', self)
         if match:
             return True
         return False
@@ -55,13 +67,23 @@ class Pii(str):
             return True
         return False
 
-    def has_at_handle(self):
+    def has_credit_card(self,anonymize=False):
+        match = re.sub(r'\d{4}-\d{4}-\d{4}-\d{4}','[credit card]', self)
+        if anonymize:
+            return match
+        else:
+            return True if match!= self else None
+
+    def has_at_handle(self,anonymize=False):
         
         #Match @ handles for twitter
-        match = re.search(r'[w\@][A-z0-9]{0,15}$', self)
-        if match:
-            return True
-        return False
+        match = re.sub(r'[\@][A-z0-9][A-z0-9.]{0,15}','[at handle]', self)
+        if anonymize:
+            return match
+        else:
+            print (match)
+            return True if match!= self else None
+            
 
     
     def has_ssn(self):
@@ -86,9 +108,10 @@ def read_data(filename: str):
 
 
 if __name__ == '__main__':
-    data = read_data('C:\Users\taido\comp4100\comp410_spring_2022\sample_data.txt')
-    print(data)
-    print('---')
+    # Removed hard coded windows path.  We'll discuss this in sprint3
+    # data = read_data('C:\Users\taido\comp4100\comp410_spring_2022\sample_data.txt')
+    # print(data)
+    # print('---')
 
     pii_data = Pii('My phone number is 123-123-1234')
     print(pii_data)
