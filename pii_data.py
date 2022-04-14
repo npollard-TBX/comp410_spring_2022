@@ -18,12 +18,13 @@ class Pii(str):
         else:
             return False
 
-    def has_email(self):
-        match = re.search(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9]{2,}\b', self)
+    def has_email(self, anonymize= False):
+        match = re.sub(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.]{2,}\b','[email address]', self)
         
-        if match:
-            return True
-        return False
+        if anonymize:
+            return match
+        else:
+            return True if match != self else None
 
     def has_ipv4(self, anoymize= False):
         # Match all forms of IPv4
@@ -74,12 +75,13 @@ class Pii(str):
             
 
     
-    def has_ssn(self):
-        match = re.search(r'\d{3}-\d{2}-\d{4}', self)
+    def has_ssn(self, anonymize= False):
+        match = re.sub(r'\d{3}-\d{2}-\d{4}','[ssn number]', self)
         
-        if match:
-            return True
-        return None
+        if anonymize:
+            return match
+        else:
+            return True if match != self else None
 
 
     def has_pii(self):
