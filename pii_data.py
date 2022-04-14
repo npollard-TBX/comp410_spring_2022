@@ -43,29 +43,22 @@ class Pii(str):
         else:
             return True if match != self else None
 
-    def has_name(self):
-        match = re.search(r'\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b', self)
-        if match:
-            return True
-        return False
+    def has_name(self, anonymize=False):
+        match = re.sub(r'\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b','[name]', self)
+        if anonymize:
+            return match
+        else:
+            return True if match != self else None
 
-    def has_name(self):
-        match = re.search(r'\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b', self)
-        if match:
-            return True
-        return False
 
-    def has_street_address(self):
-        match = re.search(r'\d{0,9}\s{1}\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b', self)
-        if match:
-            return True
-        return False
+    def has_street_address(self, anonymize=False):
+        match = re.sub(r'\d{0,9}\s{1}\b([A-Z]{1}[a-z]+\s{1})([A-Z]{1}[a-z]+)\b','[street address]', self)
+        if anonymize:
+            return match
+        else:
+            return True if match != self else None
 
-    def has_credit_card(self):
-        match = re.search(r'\d{4}-\d{4}-\d{4}-\d{4}', self)
-        if match:
-            return True
-        return False
+
 
     def has_credit_card(self,anonymize=False):
         match = re.sub(r'\d{4}-\d{4}-\d{4}-\d{4}','[credit card]', self)
@@ -108,6 +101,7 @@ def read_data(filename: str):
 
 
 if __name__ == '__main__':
+
     # Removed hard coded windows path.  We'll discuss this in sprint3
     # data = read_data('C:\Users\taido\comp4100\comp410_spring_2022\sample_data.txt')
     # print(data)
