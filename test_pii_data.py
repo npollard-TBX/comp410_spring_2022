@@ -92,7 +92,7 @@ class DataTestCases(unittest.TestCase):
                          'My name is [name]')
         #try an invalid name
         self.assertEqual(Pii('My name is john smith').has_name(anonymize=True),
-                         'My name is [name]')
+                         'My name is john smith')
 
     def test_has_street_address(self):
         test_data = Pii('My address is 123 Chestnut Lane')
@@ -103,10 +103,10 @@ class DataTestCases(unittest.TestCase):
 
     def test_has_street_address_anonymize(self):
         self.assertEqual(Pii('My address is 123 Chestnut Lane').has_street_address(anonymize=True),
-                         'My name is [street address]')
+                         'My address is [street address]')
         #try an invalid street address
         self.assertEqual(Pii('My address is 123 chestnut lane').has_street_address(anonymize=True),
-                         'My name is [street address]')
+                         'My address is 123 chestnut lane')
 
     def test_has_credit_card(self):
         #Test case for valid credit card
