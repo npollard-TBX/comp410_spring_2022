@@ -12,9 +12,9 @@ class Pii(str):
         match = re.sub(r'\d{3}-\d{3}-\d{4}', '[us phone]', self)
 
         if anonymize:
-		    return match
-	    else:
-		    return True if match != self else None
+            return match
+        else:
+            return True if match != self else None
             
 
     def has_email(self, anonymize= False):
