@@ -9,7 +9,7 @@ class Pii(str):
     # https://www.w3schools.com/python/python_regex.asp
     def has_us_phone(self, anonymize= False):
         # Match a US phone number ddd-ddd-dddd ie 123-456-7890
-        match = re.sub(r'\d{3}-\d{3}-\d{4}', '[us phone]', self)
+        match = re.sub(r'(\d{3}-\d{3}-\d{4})|(\d{10})', '[us phone]', self)
 
         if anonymize:
             return match
